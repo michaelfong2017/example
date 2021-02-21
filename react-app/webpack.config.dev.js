@@ -36,7 +36,15 @@ module.exports = {
    resolve: {
       /* If multiple files share the same name but have different extensions, webpack will 
       resolve the one with the extension listed first in the array and skip the rest. */
-      extensions: ['.js', '.jsx']
+      extensions: ['.js', '.jsx'],
+      roots: [
+         path.resolve(__dirname, 'node_modules'),
+         path.resolve(__dirname, 'src')
+      ],
+      modules: [
+         path.resolve(__dirname, 'node_modules'),
+         path.resolve(__dirname, 'src')
+      ]
    },
    module: {
       rules: [

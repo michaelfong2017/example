@@ -1,63 +1,59 @@
 import React, { lazy, Suspense, useState, useEffect } from "react";
-import "./styles/app.scss";
-import * as d3 from "d3";
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil"
 
-const NavBar = lazy(() => import("./components/NavBar"))
+import {
+  Container,
+  Col,
+  Row,
+} from "react-bootstrap"
 
-const Scatterplot = lazy(() => import("./components/Scatterplot"));
+import "styles/app.scss";
 
-const App = (props) => {
-  // React hooks with common state values for all components
-  const [dataUrl, setDataUrl] = useState(
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT_jiTlHFOZzByz7pPiBiho4jhtoYTIAXm4VZJz3mnSSjI7fo-wv0eB1GKVos3XsK-HOoqhw876N0CP/pub?gid=1897012944&single=true&output=csv"
-  );
-  const [data, setData] = useState(null);
-  const [selectedLegislator, setSelectedLegislator] = useState(null);
+const Navbar = lazy(() => import("components/Navbar"));
+const Sidebar = lazy(() => import("components/Sidebar"));
 
-  //function that will hook into the state to change it
-  function updateLegislator(legislator) {
-    setSelectedLegislator(legislator);
-  }
 
-  const updateDataUrl = () => {
-    setDataUrl(document.getElementById("data_url").value);
-  };
+const App = () => {
+  const [text, setText] = useState("");
 
-  const fetchData = (dataUrl) => {
+  const test = () => {
     if (process.env.NODE_ENV !== 'production') {
       // not for production
       console.log("yoyo")
     }
-    d3.csv(dataUrl, function (error, d) {
-      if (error) {
-        console.log(error);
-        setData([]);
-        console.log(data);
-      } else {
-        setData(d); // set State
-        console.log(data);
-      }
-    });
+    setText(document.getElementById('test').value)
   };
 
   useEffect(() => {
-    fetchData(dataUrl);
-  }, [dataUrl]);
+  }, []);
 
   return (
-    <div class="column">
+    <div>
       <Suspense fallback={<div>Loading...</div>}>
-        <NavBar />
+        <Navbar />
       </Suspense>
 
-      <input id="data_url" type="text" placeholder="Data url" />
-      <button style={{ marginBottom: "5px" }} onClick={updateDataUrl}>
-        Submit data url
-      </button>
       <Suspense fallback={<div>Loading...</div>}>
-        <Scatterplot data={data} onChangeLegislator={updateLegislator} />
+        <Row noGutters>
+
+          <Col xs="auto" xl="auto" sm="auto" md="auto" lg="auto">
+            <Sidebar />
+          </Col>
+
+          <Col>
+            <ul>
+              <li><a href="pages/dashboard/index.html">Dashboard</a></li>
+            </ul>
+          </Col>
+
+        </Row>
       </Suspense>
-      <p>{data && selectedLegislator && data[selectedLegislator] ? "Legislator " + data[selectedLegislator]['name_ch'] : data ? "No legislator selected" : "Loading..."}</p>
     </div>
   );
 };

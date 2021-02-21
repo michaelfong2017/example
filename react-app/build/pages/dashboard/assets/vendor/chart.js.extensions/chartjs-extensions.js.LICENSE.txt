@@ -1,0 +1,9 @@
+/*
+* Chart.JS Extension
+* @version: 1.0.0 (Mon, 25 Nov 2019)
+* @requires: Chart.js
+* @author: HtmlStream
+* @event-namespace: Chart.JS Extension
+* @license: Htmlstream Libraries (https://htmlstream.com/)
+* Copyright 2019 Htmlstream
+*/
