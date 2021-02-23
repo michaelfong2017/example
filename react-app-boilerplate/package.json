@@ -6,7 +6,10 @@
     "private": true,
     "scripts": {
         "dev": "webpack serve --config webpack.config.dev.js",
-        "build": "webpack --config webpack.config.prod.js"
+        "build": "webpack --config webpack.config.prod.js",
+        "docker": "docker rm -vf example-web && docker rmi -f example-web && docker build -t example-web . && docker run -d -p 8080:80 --name example-web example-web",
+        "publish": "docker tag example-web tsushima:5000/example-web:$npm_package_version && docker push tsushima:5000/example-web:$npm_package_version",
+        "deploy": "yarn run build && yarn run docker && yarn run publish"
     },
     "devDependencies": {
         "@babel/core": "^7.12.13",
