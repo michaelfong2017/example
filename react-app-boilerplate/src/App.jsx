@@ -1,3 +1,4 @@
+import { hot } from 'react-hot-loader/root';
 import React, { lazy, Suspense, useState, useEffect } from "react";
 import {
   RecoilRoot,
@@ -34,4 +35,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default hot(App);
