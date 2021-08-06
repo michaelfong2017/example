@@ -1,1 +1,0 @@
-const body=document.getElementsByTagName("body")[0],isMini=null!==window.localStorage.getItem("hs-navbar-vertical-aside-mini")&&window.localStorage.getItem("hs-navbar-vertical-aside-mini");isMini&&body.classList.add("navbar-vertical-aside-mini-mode");

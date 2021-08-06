@@ -1,36 +1,50 @@
-import { hot } from 'react-hot-loader/root';
-import React, { lazy, Suspense, useState, useEffect } from "react";
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-} from "recoil"
-
-import {
-  Container,
-  Col,
-  Row,
-  Spinner,
-} from "react-bootstrap"
+import { hot } from "react-hot-loader/root";
+import React, { useEffect } from "react";
+import { RecoilRoot } from "recoil";
 
 import "styles/app.scss";
+import styled from "styled-components";
 
-const Navbar = lazy(() => import("components/Navbar"));
+import Navbar from "components/Navbar";
+import Footer from "components/Footer"
+
+import {
+  HashRouter,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+
+import Spinner from "components/Spinner"
+
+import Page1 from "components/Page1"
+
+// const StyledFooter = styled.div`
+//   position: fixed;
+//   bottom: 0;
+// `;
 
 const App = () => {
-  useEffect(() => {
-  }, []);
+  return (
+    <RecoilRoot>
+      <HashRouter hashType="noslash">
+        <MyApp />
+      </HashRouter>
+    </RecoilRoot>
+  );
+};
 
+const MyApp = () => {
   return (
     <div>
-      <Suspense fallback={
-        <Spinner animation="border" role="status">
-          <span className="sr-only">Loading...</span>
-        </Spinner>}>
-        <Navbar />
-      </Suspense>
+      <Navbar />
+
+      <Switch>
+        <Route path="/page-1" component={Page1} />
+        <Route path="/" component={() => <h3 style={{ margin: "15px 30px", minHeight: "75vh" }}>Home</h3>} />
+      </Switch>
+
+      <Footer />
     </div>
   );
 };

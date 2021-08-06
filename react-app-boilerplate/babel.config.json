@@ -4,7 +4,9 @@
         "@babel/preset-env"
     ],
     "plugins": [
+        "react-hot-loader/babel",
         "@babel/plugin-transform-runtime",
-        "react-html-attrs"
-      ]
+        "react-html-attrs",
+        "babel-plugin-styled-components"
+    ]
 }

@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://react-app/./src/components/Test.jsx"],"names":["Test"],"mappings":"yUAUA,Q,EARMA,EAAO,WACT,OACI,qC,6FAFFA,E","file":"js/57.xxxxxxxx.bundle.js","sourcesContent":["import React from \"react\"\n\nconst Test = () => {\n    return (\n        <div>\n            Test\n        </div>\n    )\n}\n\nexport default Test"],"sourceRoot":""}

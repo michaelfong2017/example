@@ -4,15 +4,18 @@ const path = require('path');
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-   entry: [path.resolve(__dirname, 'src', 'index.js')],
+   entry: {
+      'index': path.resolve(__dirname, 'src', 'index.js'),
+   },
    output: {
       path: path.resolve(__dirname, 'build'),
-      filename: '[name].[contenthash:8].bundle.js',
-      sourceMapFilename: '[name].[contenthash:8].map',
-      chunkFilename: '[id].[contenthash:8].bundle.js'
+      filename: 'js/[name].[contenthash:8].bundle.js',
+      sourceMapFilename: 'source-map/[name].[contenthash:8].map',
+      chunkFilename: 'js/[name].[contenthash:8].bundle.js'
    },
    mode: 'production',
    devServer: {
@@ -39,6 +42,7 @@ module.exports = {
          path.resolve(__dirname, 'src')
       ],
       modules: [
+         'node_modules',
          path.resolve(__dirname, 'node_modules'),
          path.resolve(__dirname, 'src')
       ]
@@ -56,17 +60,26 @@ module.exports = {
          },
          {
             test: /\.(svg|png|jpg|gif|ttf)$/,
-            use: 'file-loader',
+            use: {
+               loader: 'file-loader',
+               options: {
+                  name: 'images/[name].[ext]',
+               }
+            }
          }
       ]
    },
    plugins: [
       new HtmlWebpackPlugin({
+         chunks: ['index', 'vendor'],
          template: path.resolve(__dirname, 'src', 'index.html')
       }),
       new CleanWebpackPlugin(),
       new webpack.DefinePlugin({
-         'process.env.NODE_ENV': JSON.stringify('production')
+         'process.env.NODE_ENV': JSON.stringify('production'),
+      }),
+      new UglifyJsPlugin({
+         sourceMap: true
       }),
       // new CopyWebpackPlugin({
       //    patterns: [

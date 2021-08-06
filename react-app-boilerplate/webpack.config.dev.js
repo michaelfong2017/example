@@ -2,13 +2,16 @@
 const path = require('path');
 // const fs = require('fs')
 const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 module.exports = {
-   entry: [path.resolve(__dirname, 'src', 'index.js')],
+   entry: {
+      'index': path.resolve(__dirname, 'src', 'index.js'),
+   },
    output: {
       path: path.resolve(__dirname, 'build'),
-      filename: '[name].bundle.js'
+      filename: 'js/[name].bundle.js'
    },
    mode: 'development',
    devServer: {
@@ -32,7 +35,7 @@ module.exports = {
       //    },
       // ],
    },
-   devtool: 'eval',
+   devtool: 'eval-source-map',
    resolve: {
       /* If multiple files share the same name but have different extensions, webpack will 
       resolve the one with the extension listed first in the array and skip the rest. */
@@ -42,9 +45,13 @@ module.exports = {
          path.resolve(__dirname, 'src')
       ],
       modules: [
+         'node_modules',
          path.resolve(__dirname, 'node_modules'),
          path.resolve(__dirname, 'src')
-      ]
+      ],
+      alias: {
+         'react-dom': '@hot-loader/react-dom'
+      }
    },
    module: {
       rules: [
@@ -59,17 +66,27 @@ module.exports = {
          },
          {
             test: /\.(svg|png|jpg|gif|ttf)$/,
-            use: 'file-loader',
+            use: {
+               loader: 'file-loader',
+               options: {
+                  name: 'images/[name].[ext]',
+               }
+            }
          }
       ]
    },
    plugins: [
       new webpack.HotModuleReplacementPlugin(),
       new HtmlWebpackPlugin({
+         chunks: ['index', 'vendor'],
          template: path.resolve(__dirname, 'src', 'index.html')
       }),
       new webpack.DefinePlugin({
-         'process.env.NODE_ENV': JSON.stringify('development')
+         'process.env.NODE_ENV': JSON.stringify('development'),
       }),
-   ]
+      new BundleAnalyzerPlugin(),
+   ],
+   optimization: {
+      splitChunks: { chunks: "all" }
+   },
 };
