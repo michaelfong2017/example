@@ -117,7 +117,7 @@ const MyNavbar = () => { // displaying component
 
   return (
     <StyledNavbar variant="light" expand="xl">
-      <StyledBrand href=".">
+      <StyledBrand href="/">
         {/* width="100%" fills parent exactly */}
         <img width="315px" height="70px" src={logo} alt="" />
       </StyledBrand>
