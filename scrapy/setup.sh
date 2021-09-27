@@ -15,10 +15,11 @@ else
 #   return 1  # we are source'd so we cannot use exit
 fi
 
-source ~/miniconda3/etc/profile.d/conda.sh &&
-conda activate ${ENV_NAME} &&
-pip install --upgrade pip &&
-conda install -c conda-forge ipykernel -y &&
-conda install -c conda-forge scrapy -y &&
-conda install -c conda-forge orjson -y &&
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate ${ENV_NAME}
+pip install --upgrade pip
+conda install -c conda-forge ipykernel -y
+conda install -c conda-forge scrapy -y
+conda install -c conda-forge orjson -y
 conda install -c conda-forge requests -y
+pip install scrapy-selenium
